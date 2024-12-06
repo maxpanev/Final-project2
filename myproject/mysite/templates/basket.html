@@ -1,0 +1,52 @@
+{% extends 'layoute.html' %}
+
+{% load static %}
+
+{% block title %}
+   <title>Корзина</title>
+{% endblock %}
+
+{% block content %}
+<!-- Подключаем файл стилей -->
+<link rel="stylesheet" type="text/css" href="{% static 'mysite/css/flowers.css' %}">
+
+<div class="container mt-4">
+   <h1>Это Корзина</h1>
+   <div id="basketItems"></div>
+   <h3>Итоговая сумма: <span id="totalPrice">0</span> руб.</h3>
+</div>
+
+<script>
+   function loadBasket() {
+       let basket = JSON.parse(localStorage.getItem('basket') || '[]');
+       let basketItems = document.getElementById('basketItems');
+       let totalPrice = 0;
+
+       basketItems.innerHTML = '';
+       basket.forEach((item, index) => {
+           totalPrice += item.price;
+           basketItems.innerHTML += `
+               <div class="card mb-4">
+                   <img class="card-img-top" src="${item.image}" alt="${item.name}">
+                   <div class="card-body">
+                       <h5 class="card-title">${item.name}</h5>
+                       <p class="card-text">${item.price} руб.</p>
+                       <button class="btn btn-danger" onclick="removeFromBasket(${index})">Отменить</button>
+                   </div>
+               </div>
+           `;
+       });
+
+       document.getElementById('totalPrice').innerText = totalPrice;
+   }
+
+   function removeFromBasket(index) {
+       let basket = JSON.parse(localStorage.getItem('basket') || '[]');
+       basket.splice(index, 1);
+       localStorage.setItem('basket', JSON.stringify(basket));loadBasket();
+   }
+
+   // Загрузить корзину при загрузке страницы
+   window.onload = loadBasket;
+</script>
+{% endblock %}
