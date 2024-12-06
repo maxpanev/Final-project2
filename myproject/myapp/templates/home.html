@@ -1,0 +1,88 @@
+{% extends 'layoute.html' %}
+{% load static %}
+
+{% block title %}
+    <title>Главная страница</title>
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <!-- Первая карточка -->
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <img class="card-img-top" src="{% static 'img/image1.jpg' %}" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">Лиловый комплимент</h5>
+                    <p class="card-text" data-price="4550">4550 руб.</p>
+                    <a href="#" class="btn btn-primary" onclick="addToBasket('Лиловый комплимент', 4550, '{% static 'img/image1.jpg' %}')">Заказать</a>
+                </div>
+            </div>
+        </div>
+        <!-- Вторая карточка -->
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <img class="card-img-top" src="{% static 'img/image2.jpg' %}" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">Раннее утро</h5>
+                    <p class="card-text" data-price="3600">3600 руб.</p>
+                    <a href="#" class="btn btn-primary" onclick="addToBasket('Раннее утро', 3600, '{% static 'img/image2.jpg' %}')">Заказать</a>
+                </div>
+            </div>
+        </div>
+        <!-- Третья карточка -->
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <img class="card-img-top" src="{% static 'img/image3.jpg' %}" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">Цветочная ладья</h5>
+                    <p class="card-text" data-price="4290">4290 руб.</p>
+                    <a href="#" class="btn btn-primary" onclick="addToBasket('Цветочная ладья', 4290, '{% static 'img/image3.jpg' %}')">Заказать</a>
+                </div>
+            </div>
+        </div>
+        <!-- Четвертая карточка -->
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <img class="card-img-top" src="{% static 'img/image4.jpg' %}" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">Свадебный букет №1</h5>
+                    <p class="card-text" data-price="8700">8700 руб.</p>
+                    <a href="#" class="btn btn-primary" onclick="addToBasket('Свадебный букет №1', 8700, '{% static 'img/image4.jpg' %}')">Заказать</a>
+                </div>
+            </div>
+        </div>
+        <!-- Пятая карточка -->
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <img class="card-img-top" src="{% static 'img/image5.jpg' %}" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">Свадебный букет №2</h5>
+                    <p class="card-text" data-price="5625">5625 руб.</p>
+                    <a href="#" class="btn btn-primary" onclick="addToBasket('Свадебный букет №2', 5625, '{% static 'img/image5.jpg' %}')">Заказать</a>
+                </div>
+            </div>
+        </div>
+        <!-- Шестая карточка -->
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <img class="card-img-top" src="{% static 'img/image6.jpg' %}" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">Свадебный букет №3</h5>
+                    <p class="card-text" data-price="6890">6890 руб.</p>
+                    <a href="#" class="btn btn-primary" onclick="addToBasket('Свадебный букет №3', 6890, '{% static 'img/image6.jpg' %}')">Заказать</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function addToBasket(name, price, image) {
+        let basket = JSON.parse(localStorage.getItem('basket') || '[]');
+        basket.push({ name, price, image });
+        localStorage.setItem('basket', JSON.stringify(basket));
+        alert(name + ' добавлен в корзину.');
+    }
+</script>
+{% endblock %}

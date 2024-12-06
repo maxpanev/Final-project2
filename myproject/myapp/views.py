@@ -3,6 +3,8 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import AuthenticationForm
 from .forms import RegisterForm
 from .models import Profile
+from django.http import HttpResponse
+
 
 def index(request):
     return render(request, 'layoute.html')
@@ -40,9 +42,9 @@ def layoute(request):
     profile = Profile.objects.get(user=request.user)
     return render(request, 'layoute.html', {'profile': profile})
 
-def click(request):
-    if request.user.is_authenticated:
-        profile = Profile.objects.get(user=request.user)
-        profile.clicks += 1
-        profile.save()
-    return redirect('layoute')
+
+def home(request):
+    return render(request, 'home.html')
+
+def basket(request):
+    return render(request, 'basket.html')
