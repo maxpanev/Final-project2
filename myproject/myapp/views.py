@@ -5,7 +5,7 @@ from .forms import RegisterForm
 from .models import Profile
 
 def index(request):
-    return render(request, 'index.html')
+    return render(request, 'layoute.html')
 
 def register(request):
     if request.method == 'POST':
@@ -32,7 +32,7 @@ def user_login(request):
 
 def user_logout(request):
     logout(request)
-    return redirect('index')
+    return redirect('layoute')
 
 def layoute(request):
     if not request.user.is_authenticated:

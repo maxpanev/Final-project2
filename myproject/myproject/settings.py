@@ -73,7 +73,7 @@ AUTHENTICATION_BACKENDS = (
 )
 
 LOGIN_REDIRECT_URL = 'layoute'
-LOGOUT_REDIRECT_URL = 'index'
+LOGOUT_REDIRECT_URL = 'layoute'
 
 WSGI_APPLICATION = 'myproject.wsgi.application'
 
