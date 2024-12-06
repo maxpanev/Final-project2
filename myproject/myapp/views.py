@@ -9,6 +9,12 @@ from django.http import HttpResponse
 def index(request):
     return render(request, 'layoute.html')
 
+def home(request):
+    return render(request, 'home.html')
+
+def basket(request):
+    return render(request, 'basket.html')
+
 def register(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST)
@@ -16,7 +22,7 @@ def register(request):
             user = form.save()
             Profile.objects.create(user=user)
             login(request, user)
-            return redirect('layoute')
+            return redirect('home')  # Измените 'layoute' на 'home'
     else:
         form = RegisterForm()
     return render(request, 'register.html', {'form': form})
@@ -27,7 +33,7 @@ def user_login(request):
         if form.is_valid():
             user = form.get_user()
             login(request, user)
-            return redirect('layoute')
+            return redirect('home')  # Измените 'layoute' на 'home'
     else:
         form = AuthenticationForm()
     return render(request, 'login.html', {'form': form})
@@ -41,10 +47,3 @@ def layoute(request):
         return redirect('login')
     profile = Profile.objects.get(user=request.user)
     return render(request, 'layoute.html', {'profile': profile})
-
-
-def home(request):
-    return render(request, 'home.html')
-
-def basket(request):
-    return render(request, 'basket.html')

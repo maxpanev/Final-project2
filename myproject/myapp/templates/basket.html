@@ -13,7 +13,33 @@
 <div class="container mt-4">
    <h1>Это Корзина</h1>
    <div id="basketItems"></div>
-   <h3>Итоговая сумма: <span id="totalPrice">0</span> руб.</h3>
+
+   <!-- Добавляем обязательные поля для заполнения -->
+   <div class="form-group">
+       <label for="city">Город:</label>
+       <select class="form-control" id="city" required>
+           <option value="" disabled selected hidden>Выберите город</option>
+           <option value="Москва">Москва</option>
+           <option value="Санкт-Петербург">Санкт-Петербург</option>
+           <option value="Краснодар">Краснодар</option>
+           <option value="Самара">Самара</option>
+       </select>
+   </div>
+   <div class="form-group">
+       <label for="address">Адрес доставки:</label>
+       <input type="text" class="form-control" id="address" placeholder="Введите адрес доставки" required>
+   </div>
+   <div class="form-group">
+       <label for="deliveryDate">Дата доставки:</label>
+       <input type="date" class="form-control" id="deliveryDate" required>
+   </div>
+   <div class="form-group">
+       <label for="deliveryTime">Время доставки:</label>
+       <input type="time" class="form-control" id="deliveryTime" required>
+   </div>
+
+   <h3>Общая стоимость: <span id="totalPrice">0</span> руб.</h3>
+   <button class="btn btn-primary" onclick="confirmOrder()">Подтвердить заказ</button>
 </div>
 
 <script>
@@ -22,28 +48,67 @@
        let basketItems = document.getElementById('basketItems');
        let totalPrice = 0;
 
+       // Группируем товары по имени и считаем количество
+       let groupedBasket = {};
+       basket.forEach(item => {
+           if (groupedBasket[item.name]) {
+               groupedBasket[item.name].count += 1;
+               groupedBasket[item.name].price += item.price;
+           } else {
+               groupedBasket[item.name] = { ...item, count: 1 };
+           }
+       });
+
        basketItems.innerHTML = '';
-       basket.forEach((item, index) => {
+       for (let name in groupedBasket) {
+           let item = groupedBasket[name];
            totalPrice += item.price;
-           basketItems.innerHTML += `
-               <div class="card mb-4">
+           basketItems.innerHTML += `<div class="card mb-4">
                    <img class="card-img-top" src="${item.image}" alt="${item.name}">
                    <div class="card-body">
                        <h5 class="card-title">${item.name}</h5>
-                       <p class="card-text">${item.price} руб.</p>
-                       <button class="btn btn-danger" onclick="removeFromBasket(${index})">Отменить</button>
+                       <p class="card-text">${item.price} руб. (${item.count} шт.)</p>
+                       <button class="btn btn-danger" onclick="removeFromBasket('${item.name}')">Отменить</button>
                    </div>
                </div>
            `;
-       });
+       }
 
        document.getElementById('totalPrice').innerText = totalPrice;
    }
 
-   function removeFromBasket(index) {
+   function removeFromBasket(name) {
        let basket = JSON.parse(localStorage.getItem('basket') || '[]');
-       basket.splice(index, 1);
-       localStorage.setItem('basket', JSON.stringify(basket));loadBasket();
+       basket = basket.filter(item => item.name !== name);
+       localStorage.setItem('basket', JSON.stringify(basket));
+       loadBasket();
+   }
+
+   function confirmOrder() {
+       let basket = JSON.parse(localStorage.getItem('basket') || '[]');
+
+       // Проверяем наличие товаров в корзине
+       if (basket.length === 0) {
+           alert('В Корзине нет ни одного товара');
+           return;
+       }
+
+       let city = document.getElementById('city').value;
+       let address = document.getElementById('address').value;
+       let deliveryDate = document.getElementById('deliveryDate').value;
+       let deliveryTime = document.getElementById('deliveryTime').value;
+
+       if (!city || !address || !deliveryDate || !deliveryTime) {
+           alert('Пожалуйста, заполните все обязательные поля.');
+           return;
+       }
+
+       // Показать уведомление о подтверждении заказа
+       alert('Заказ в пути');
+
+       // Очистить корзину
+       localStorage.setItem('basket', JSON.stringify([]));
+       loadBasket();
    }
 
    // Загрузить корзину при загрузке страницы
