@@ -40,9 +40,3 @@ def layoute(request):
     profile = Profile.objects.get(user=request.user)
     return render(request, 'layoute.html', {'profile': profile})
 
-def click(request):
-    if request.user.is_authenticated:
-        profile = Profile.objects.get(user=request.user)
-        profile.clicks += 1
-        profile.save()
-    return redirect('layoute')
