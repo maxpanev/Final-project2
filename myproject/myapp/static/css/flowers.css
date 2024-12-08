@@ -1,5 +1,30 @@
 .card-img-top {
-       width: 150px; /* Устанавливаем фиксированную ширину */
-       height: 150px; /* Устанавливаем фиксированную высоту */
-       object-fit: cover; /* Обеспечиваем сохранение пропорций изображения */
-   }
+    width: 150px; /* Устанавливаем фиксированную ширину */
+    height: 150px; /* Устанавливаем фиксированную высоту */
+    object-fit: cover; /* Обеспечиваем сохранение пропорций изображения */
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.card-img-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 160px; /* Размер контейнера для изображения */
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
