@@ -1,11 +1,13 @@
 .card-img-top {
-    width: 150px; /* Устанавливаем фиксированную ширину */
-    height: 150px; /* Устанавливаем фиксированную высоту */
-    object-fit: cover; /* Обеспечиваем сохранение пропорций изображения */
+    width: 500px; /* Увеличиваем ширину изображения */
+    height: 500px; /* Увеличиваем высоту изображения */
+    object-fit: cover;
     display: block;
     margin-left: auto;
     margin-right: auto;
 }
+
+
 
 .card-body {
     display: flex;
@@ -19,7 +21,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 160px; /* Размер контейнера для изображения */
+    height: 320px; /* Увеличиваем высоту контейнера для изображения */
 }
 
 .card {
@@ -27,4 +29,5 @@
     flex-direction: column;
     justify-content: space-between;
     height: 100%;
+    padding: 50px; /* Добавляем отступы, чтобы увеличить размер карточки */
 }
