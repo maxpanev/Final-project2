@@ -1,8 +1,9 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import AuthenticationForm
 from .forms import RegisterForm
-from .models import Profile
+from .models import Profile, Product, Basket, BasketItem
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 
 
@@ -12,8 +13,33 @@ def index(request):
 def home(request):
     return render(request, 'home.html')
 
+
+@login_required
+def add_to_basket(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+    basket, created = Basket.objects.get_or_create(user=request.user)
+    basket_item, item_created = BasketItem.objects.get_or_create(basket=basket, product=product)
+
+    if not item_created:
+        basket_item.quantity += 1
+        basket_item.save()
+
+    return redirect('basket')
+
+
+@login_required
 def basket(request):
-    return render(request, 'basket.html')
+    basket, created = Basket.objects.get_or_create(user=request.user)
+    total_price = sum(item.product.price * item.quantity for item in basket.items.all())
+    return render(request, 'basket.html', {'basket': basket, 'total_price': total_price})
+
+
+@login_required
+def remove_from_basket(request, item_id):
+    basket_item = get_object_or_404(BasketItem, id=item_id, basket__user=request.user)
+    basket_item.delete()
+    return redirect('basket')
+
 
 def register(request):
     if request.method == 'POST':

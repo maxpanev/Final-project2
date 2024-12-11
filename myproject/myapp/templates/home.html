@@ -19,7 +19,7 @@
                 <div class="card-body d-flex flex-column justify-content-center">
                     <h5 class="card-title">Лиловый комплимент</h5>
                     <p class="card-text" data-price="4550">4550 руб.</p>
-                    <a href="#" class="btn btn-success" onclick="addToBasket('Лиловый комплимент', 4550, '{% static 'img/image1.jpg' %}')">Заказать</a>
+                    <a href="{% url 'add_to_basket' product_id=1 %}" class="btn btn-success">Заказать</a>
                 </div>
             </div>
         </div>
