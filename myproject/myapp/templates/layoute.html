@@ -7,7 +7,6 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/flowers.css' %}">
-
     <style>
         body {
             background-image: url('{% static "img/background.jpg" %}');
@@ -52,6 +51,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'basket' %}">Корзина</a>
                     </li>
+                    <li class="nav-item">
+                    <a class="nav-link" href="{% url 'logout' %}">Выйти из аккаунта</a>
+                    </li>
                 </ul>
             </div>
         </nav>
@@ -62,22 +64,28 @@
         </main>
 
         <footer id="footer" style="padding: 50px; color: dark; background-color: #afd0ba;">
-            <h3>О НАС</h3>
             <div class="container">
                 <div class="row">
                     <div class="col-sm-12 col-md-4">
-                        <h4>Присоединяйтесь:</h4>
+                        <h4>ArtFlora</h4>
                         <a href="https://vk.com/clonewarssereal">VK</a><br>
                         <a href="https://t.me/s/swerok">Telegram</a>
                     </div>
                     <div class="col-sm-12 col-md-4">
-                        <h4>Фильмы и сериалы на:</h4>
-                        <a href="https://star-wars-lordfilm.net/">LORDFILM</a><br>
-                        <a href="https://rutube.ru/plst/323656/">Rutube</a>
+                        <h4>Офис в Москве</h4>
+                        <p>г. Москва, Садовническая ул, д. 102, помещение 1</p>
                     </div>
                     <div class="col-sm-12 col-md-4">
                         <h4>Контактная информация:</h4>
-                        <p>Телефон: +7 (123) 456-78-90<br>email: starwars2024@example.com</p>
+                        <p>Телефон: +7 (123) 456-78-90<br>email: ArtFlora2024@example.com</p>
+                    </div>
+                    <div class="col-sm-12 col-md-4">
+                        <h4>Полезные ссылки</h4>
+                        <p>О нас<br>Вакансии<br>Стать курьером<br>Для прессы</p>
+                    </div>
+                    <div class="col-sm-12 col-md-4">
+                        <h4>Популярные города</h4>
+                        <p>Москва<br>Санкт-Петербург<br>Краснодар<br>Самара</p>
                     </div>
                 </div>
             </div>

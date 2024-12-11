@@ -1,33 +1,30 @@
-.card-img-top {
-    width: 500px; /* Увеличиваем ширину изображения */
-    height: 500px; /* Увеличиваем высоту изображения */
-    object-fit: cover;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-
-
-.card-body {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-}
-
-.card-img-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 320px; /* Увеличиваем высоту контейнера для изображения */
-}
-
 .card {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 100%;
-    padding: 50px; /* Добавляем отступы, чтобы увеличить размер карточки */
+    height: auto;
+    padding: 20px; /* Уменьшите отступы */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+.card-img-top {
+    width: 100%; /* Делаем изображение адаптивным */
+    height: 300px; /* Фиксируем высоту изображения */
+    object-fit: cover;
+    border-radius: 8px 8px 0 0;
+}
+
+.card-body {
+    text-align: center;
+    padding: 10px;
+}
+
+.card-img-wrapper {
+    height: 300px; /* Оптимальная высота для изображения */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; /* Скрываем лишние части изображения */
 }
