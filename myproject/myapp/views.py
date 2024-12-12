@@ -11,7 +11,8 @@ def index(request):
     return render(request, 'layoute.html')
 
 def home(request):
-    return render(request, 'home.html')
+    products = Product.objects.all()  # Получить все продукты из базы данных
+    return render(request, 'home.html', {'products': products})
 
 
 @login_required

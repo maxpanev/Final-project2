@@ -10,54 +10,23 @@
     <!-- Заголовок для первой группы карточек -->
     <h3 class="text-left mb-4">Специальное предложение</h3>
     <div class="row">
-        <!-- Первая карточка -->
+        {% for product in products %}
         <div class="col-md-4 mb-4">
             <div class="card h-100 text-center">
                 <div class="card-img-wrapper">
-                    <img class="card-img-top" src="{% static 'img/image1.jpg' %}" alt="Card image cap">
+                    <img class="card-img-top" src="{% static product.image_url %}" alt="Card image cap">
                 </div>
                 <div class="card-body d-flex flex-column justify-content-center">
-                    <h5 class="card-title">Лиловый комплимент</h5>
-                    <p class="card-text">4550 руб.</p>
-                    <form method="post" action="{% url 'add_to_basket' product_id=1 %}">
+                    <h5 class="card-title">{{ product.name }}</h5>
+                    <p class="card-text">{{ product.price }} руб.</p>
+                    <form method="post" action="{% url 'add_to_basket' product_id=product.id %}">
                         {% csrf_token %}
                         <button type="submit" class="btn btn-success">Заказать</button>
                     </form>
                 </div>
             </div>
         </div>
-        <!-- Вторая карточка -->
-        <div class="col-md-4 mb-4">
-            <div class="card h-100 text-center">
-                <div class="card-img-wrapper">
-                    <img class="card-img-top mx-auto" src="{% static 'img/image2.jpg' %}" alt="Card image cap">
-                </div>
-                <div class="card-body d-flex flex-column justify-content-center">
-                    <h5 class="card-title">Раннее утро</h5>
-                    <p class="card-text">3600 руб.</p>
-                    <form method="post" action="{% url 'add_to_basket' product_id=2 %}">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-success">Заказать</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-        <!-- Третья карточка -->
-        <div class="col-md-4 mb-4">
-            <div class="card h-100 text-center">
-                <div class="card-img-wrapper">
-                    <img class="card-img-top mx-auto" src="{% static 'img/image3.jpg' %}" alt="Card image cap">
-                </div>
-                <div class="card-body d-flex flex-column justify-content-center">
-                    <h5 class="card-title">Цветочная ладья</h5>
-                    <p class="card-text">4290 руб.</p>
-                    <form method="post" action="{% url 'add_to_basket' product_id=3 %}">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-success">Заказать</button>
-                    </form>
-                </div>
-            </div>
-        </div>
+        {% endfor %}
     </div>
 </div>
 {% endblock %}
