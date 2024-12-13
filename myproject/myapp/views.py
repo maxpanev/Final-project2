@@ -45,6 +45,19 @@ def remove_from_basket(request, item_id):
     return redirect('basket')
 
 
+@login_required
+def checkout(request):
+    basket, created = Basket.objects.get_or_create(user=request.user)
+
+    # Обнуляем корзину
+    basket.items.all().delete()
+
+    # Добавляем уведомление для пользователя
+    message = "Заказ в пути"
+
+    return render(request, 'basket.html', {'basket': basket, 'total_price': 0, 'message': message})
+
+
 def register(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST)

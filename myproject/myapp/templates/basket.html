@@ -12,7 +12,7 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Изображение</th> <!-- Добавляем заголовок для изображения -->
+                <th>Изображение</th>
                 <th>Название</th>
                 <th>Количество</th>
                 <th>Цена за шт.</th>
@@ -37,5 +37,13 @@
         </tbody>
     </table>
     <h4>Общая стоимость: {{ total_price }} руб.</h4>
+    <a href="{% url 'checkout' %}" class="btn btn-success">Оплатить</a>
+
 </div>
+
+{% if message %}
+<div class="alert alert-success" role="alert">
+    {{ message }}
+</div>
+{% endif %}
 {% endblock %}
