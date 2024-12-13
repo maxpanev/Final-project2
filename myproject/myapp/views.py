@@ -4,7 +4,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from .forms import RegisterForm
 from .models import Profile, Product, Basket, BasketItem
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
+from django.http import HttpResponseRedirect
 
 
 def index(request):
@@ -25,7 +25,10 @@ def add_to_basket(request, product_id):
         basket_item.quantity += 1
         basket_item.save()
 
-    return redirect('basket')
+
+
+    # Перенаправляем пользователя обратно на предыдущую страницу
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
 
 @login_required
