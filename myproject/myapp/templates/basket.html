@@ -33,17 +33,64 @@
                     <a href="{% url 'remove_from_basket' item.id %}" class="btn btn-danger">Удалить</a>
                 </td>
             </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5">Корзина пуста</td>
+            </tr>
             {% endfor %}
         </tbody>
     </table>
-    <h4>Общая стоимость: {{ total_price }} руб.</h4>
-    <a href="{% url 'checkout' %}" class="btn btn-success">Оплатить</a>
 
-</div>
+    {% if basket.items.count > 0 %}
+    <form method="post" action="{% url 'checkout' %}">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="city">Город</label>
+            <select name="city" id="city" class="form-control" required>
+                <option value="" disabled selected hidden>Выберите город</option>
+                <option value="Москва">Москва</option>
+                <option value="Санкт-Петербург">Санкт-Петербург</option>
+                <option value="Краснодар">Краснодар</option>
+                <option value="Самара">Самара</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="address">Адрес</label>
+            <input type="text" name="address" id="address" class="form-control" placeholder="Адрес" required>
+        </div>
+        <div class="form-group">
+            <label for="date">Дата</label>
+            <input type="date" name="date" id="date" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="time">Время</label>
+            <select name="time" id="time" class="form-control">
+                <option value="" disabled selected hidden>Выберите время</option>
+                <option value="09:00">09:00</option>
+                <option value="10:00">10:00</option>
+                <option value="11:00">11:00</option>
+                <option value="12:00">12:00</option>
+                <option value="13:00">13:00</option>
+                <option value="14:00">14:00</option>
+                <option value="15:00">15:00</option>
+                <option value="16:00">16:00</option>
+                <option value="17:00">17:00</option>
+                <option value="18:00">18:00</option>
+            </select>
+        </div>
+        <h4>Общая стоимость: {{ total_price }} руб.</h4>
+        <button type="submit" class="btn btn-success">Оплатить</button>
+    </form>
+    {% else %}
+    <div class="alert alert-warning" role="alert">
+        Корзина пуста
+    </div>
+    {% endif %}
 
-{% if message %}
-<div class="alert alert-success" role="alert">
-    {{ message }}
+    {% if message %}
+    <div class="alert alert-success" role="alert">
+        {{ message }}
+    </div>
+    {% endif %}
 </div>
-{% endif %}
 {% endblock %}

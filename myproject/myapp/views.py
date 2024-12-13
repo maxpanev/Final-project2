@@ -47,15 +47,22 @@ def remove_from_basket(request, item_id):
 
 @login_required
 def checkout(request):
-    basket, created = Basket.objects.get_or_create(user=request.user)
+    if request.method == 'POST':
+        city = request.POST.get('city')
+        address = request.POST.get('address')
+        date = request.POST.get('date')
+        time = request.POST.get('time')
 
-    # Обнуляем корзину
-    basket.items.all().delete()
+        # Здесь можно добавить логику для обработки этих данных
+        # Например, сохранение информации о заказе в базе данных
 
-    # Добавляем уведомление для пользователя
-    message = "Заказ в пути"
+        basket, created = Basket.objects.get_or_create(user=request.user)
+        basket.items.all().delete()
 
-    return render(request, 'basket.html', {'basket': basket, 'total_price': 0, 'message': message})
+        message = "Заказ в пути"
+        return render(request, 'basket.html', {'basket': basket, 'total_price': 0, 'message': message})
+
+    return redirect('basket')
 
 
 def register(request):

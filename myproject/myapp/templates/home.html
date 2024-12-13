@@ -11,6 +11,20 @@
     <h3 class="text-left mb-4">Специальное предложение</h3>
     <div class="row">
         {% for product in products %}
+        <!-- Добавляем новый заголовок после первых 3 карточек -->
+        {% if forloop.counter == 4 %}
+            </div>
+            <h3 class="text-left mb-4">Свадебные букеты</h3>
+            <div class="row">
+        {% endif %}
+
+        <!-- Добавляем новый заголовок после первых 6 карточек -->
+        {% if forloop.counter == 7 %}
+            </div>
+            <h3 class="text-left mb-4">Цветы в коробке</h3>
+            <div class="row">
+        {% endif %}
+
         <!-- Карточка товара -->
         <div class="col-md-4 mb-4">
             <div class="card h-100 text-center">
