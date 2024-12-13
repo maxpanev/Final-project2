@@ -11,16 +11,11 @@
     <h3 class="text-left mb-4">Специальное предложение</h3>
     <div class="row">
         {% for product in products %}
-        {% if forloop.counter == 4 %}
-            <!-- Заголовок для второй группы карточек -->
-            </div> <!-- Закрываем предыдущий ряд -->
-            <h3 class="text-left mb-4">Свадебные букеты</h3>
-            <div class="row"> <!-- Начинаем новый ряд -->
-        {% endif %}
+        <!-- Карточка товара -->
         <div class="col-md-4 mb-4">
             <div class="card h-100 text-center">
                 <div class="card-img-wrapper">
-                    <img class="card-img-top" src="{% static product.image_url %}" alt="Card image cap">
+                    <img class="card-img-top" src="{{ product.image.url }}" alt="{{ product.name }}">
                 </div>
                 <div class="card-body d-flex flex-column justify-content-center">
                     <h5 class="card-title">{{ product.name }}</h5>
