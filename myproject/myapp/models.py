@@ -17,3 +17,12 @@ class BasketItem(models.Model):
     basket = models.ForeignKey(Basket, related_name='items', on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=1)
+
+class Order(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    basket = models.OneToOneField(Basket, on_delete=models.CASCADE)
+    city = models.CharField(max_length=255)
+    address = models.CharField(max_length=255)
+    date = models.DateField()
+    time = models.TimeField()
+    created_at = models.DateTimeField(auto_now_add=True)

@@ -2,9 +2,10 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import AuthenticationForm
 from .forms import RegisterForm
-from .models import Profile, Product, Basket, BasketItem
+from .models import Profile, Product, Basket, BasketItem, Order
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
+from .bot import send_order_to_telegram  # Импортируем функцию отправки в Telegram
 
 
 def index(request):
@@ -53,10 +54,22 @@ def checkout(request):
         date = request.POST.get('date')
         time = request.POST.get('time')
 
-        # Здесь можно добавить логику для обработки этих данных
-        # Например, сохранение информации о заказе в базе данных
-
         basket, created = Basket.objects.get_or_create(user=request.user)
+
+        # Создаем объект Order
+        order = Order.objects.create(
+            user=request.user,
+            basket=basket,
+            city=city,
+            address=address,
+            date=date,
+            time=time
+        )
+
+        # Отправляем заказ в Telegram
+        send_order_to_telegram(order)
+
+        # Очищаем корзину
         basket.items.all().delete()
 
         message = "Заказ в пути"
