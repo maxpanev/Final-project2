@@ -78,6 +78,14 @@
                 <option value="18:00">18:00</option>
             </select>
         </div>
+        <div class="form-group">
+            <label for="phone">Телефон для обратной связи</label>
+            <input type="tel" name="phone" id="phone" class="form-control" placeholder="Ваш номер телефона" pattern="[0-9]+" required>
+        </div>
+        <div class="form-group">
+            <label for="comment">Комментарий</label>
+            <textarea name="comment" id="comment" class="form-control" rows="4" placeholder="Ваш комментарий"></textarea>
+        </div>
         <h4>Общая стоимость: {{ total_price }} руб.</h4>
         <button type="submit" class="btn btn-success">Оплатить</button>
     </form>

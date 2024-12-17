@@ -53,6 +53,8 @@ def checkout(request):
         address = request.POST.get('address')
         date = request.POST.get('date')
         time = request.POST.get('time')
+        phone = request.POST.get('phone')
+        comment = request.POST.get('comment')  # Получаем комментарий
 
         basket, created = Basket.objects.get_or_create(user=request.user)
 
@@ -63,7 +65,9 @@ def checkout(request):
             city=city,
             address=address,
             date=date,
-            time=time
+            time=time,
+            phone=phone,
+            comment=comment  # Сохраняем комментарий в заказе
         )
 
         # Отправляем заказ в Telegram
