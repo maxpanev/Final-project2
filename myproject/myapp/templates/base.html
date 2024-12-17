@@ -40,8 +40,11 @@
     </style>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="{% url 'layoute' %}">ArtFlora</a>
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color: transparent;">
+    <a class="navbar-brand" href="{% url 'layoute' %}">
+        <img src="{% static 'img/logo.png' %}" alt="Logo" style="height: 30px; margin-right: 0px;">
+        <strong>ArtFlora</strong>
+    </a>
     <div class="collapse navbar-collapse">
         <ul class="navbar-nav ml-auto">
             {% if user.is_authenticated %}
