@@ -1,9 +1,9 @@
-from telegram import Bot
+import requests
 from django.conf import settings
 from .models import Order
 
+
 def send_order_to_telegram(order: Order):
-    bot = Bot(token=settings.TELEGRAM_BOT_TOKEN)
     message = (
         f"Новый заказ!\n"
         f"Пользователь: {order.user.username}\n"
@@ -13,4 +13,14 @@ def send_order_to_telegram(order: Order):
         f"Время доставки: {order.time}\n"
         f"Адрес доставки: {order.city}, {order.address}\n"
     )
-    bot.send_message(chat_id=settings.TELEGRAM_CHAT_ID, text=message)
+
+    url = f"https://api.telegram.org/bot{settings.TELEGRAM_BOT_TOKEN}/sendMessage"
+    data = {
+        "chat_id": settings.TELEGRAM_CHAT_ID,
+        "text": message
+    }
+
+    response = requests.post(url, data=data)
+    if response.status_code != 200:
+        # Обработка ошибки
+        print("Ошибка при отправке сообщения в Telegram:", response.text)

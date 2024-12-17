@@ -20,7 +20,7 @@ class BasketItem(models.Model):
 
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    basket = models.OneToOneField(Basket, on_delete=models.CASCADE)
+    basket = models.ForeignKey(Basket, on_delete=models.CASCADE)
     city = models.CharField(max_length=255)
     address = models.CharField(max_length=255)
     date = models.DateField()
