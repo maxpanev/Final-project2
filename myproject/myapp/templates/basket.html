@@ -44,6 +44,8 @@
     {% if basket.items.count > 0 %}
     <form method="post" action="{% url 'checkout' %}">
         {% csrf_token %}
+        <h3>Заполните поля</h3>
+        <hr>
         <div class="form-group">
             <label for="city">Город</label>
             <select name="city" id="city" class="form-control" required>
@@ -66,14 +68,10 @@
             <label for="time">Время</label>
             <select name="time" id="time" class="form-control">
                 <option value="" disabled selected hidden>Выберите время</option>
-                <option value="С 07:00 до 09:00">С 07:00 до 09:00</option>
-                <option value="С 09:00 до 11:00">С 09:00 до 11:00</option>
-                <option value="С 11:00 до 13:00">С 11:00 до 13:00</option>
-                <option value="С 13:00 до 15:00">С 13:00 до 15:00</option>
-                <option value="С 15:00 до 17:00">С 15:00 до 17:00</option>
-                <option value="С 17:00 до 19:00">С 17:00 до 19:00</option>
-                <option value="С 13:00 до 15:00">С 19:00 до 21:00</option>
-                <option value="С 21:00 до 23:00">С 21:00 до 23:00</option>
+                <option value="С 07:00 до 11:00">С 07:00 до 11:00</option>
+                <option value="С 11:00 до 15:00">С 11:00 до 15:00</option>
+                <option value="С 15:00 до 19:00">С 15:00 до 19:00</option>
+                <option value="С 19:00 до 23:00">С 19:00 до 23:00</option>
             </select>
         </div>
         <div class="form-group">
