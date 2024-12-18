@@ -24,7 +24,7 @@ class Order(models.Model):
     city = models.CharField(max_length=255)
     address = models.CharField(max_length=255)
     date = models.DateField()
-    time = models.TimeField()
+    time = models.CharField(max_length=255)
     phone = models.CharField(max_length=11, default='')
     comment = models.TextField(blank=True, default='')  # Новое поле для комментариев
     created_at = models.DateTimeField(auto_now_add=True)
