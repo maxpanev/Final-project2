@@ -40,7 +40,20 @@
             {% endfor %}
         </tbody>
     </table>
-
+<div class="additional-info">
+    {% for order in orders %}
+        {% if order.status != 'completed' %}
+            <div class="order">
+                <h3>Заказ №{{ order.id }}</h3>
+                <p>Статус: {{ order.get_status_display }}</p>
+                <p>Дата: {{ order.created_at }}</p>
+                <!-- Здесь вы можете добавить отображение товаров из заказа и другую информацию -->
+            </div>
+        {% endif %}
+    {% empty %}
+        <p>Нет активных заказов.</p>
+    {% endfor %}
+</div>
     {% if basket.items.count > 0 %}
     <form method="post" action="{% url 'checkout' %}">
         {% csrf_token %}
@@ -79,16 +92,13 @@
             <input type="tel" name="phone" id="phone" class="form-control" placeholder="Ваш номер телефона" pattern="[0-9]+" required>
         </div>
         <div class="form-group">
-            <label for="comment">Комментарий</label>
+            <label for="comment">Комментарий (не обязательно)</label>
             <textarea name="comment" id="comment" class="form-control" rows="4" placeholder="Ваш комментарий"></textarea>
         </div>
         <h4>Общая стоимость: {{ total_price }} руб.</h4>
         <button type="submit" class="btn btn-success">Оплатить</button>
     </form>
-    {% else %}
-    <div class="alert alert-warning" role="alert">
-        Корзина пуста
-    </div>
+
     {% endif %}
 
     {% if message %}

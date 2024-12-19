@@ -32,9 +32,15 @@ def add_to_basket(request, product_id):
 
 @login_required
 def basket(request):
+    # Получаем корзину пользователя
     basket, created = Basket.objects.get_or_create(user=request.user)
     total_price = sum(item.product.price * item.quantity for item in basket.items.all())
-    return render(request, 'basket.html', {'basket': basket, 'total_price': total_price})
+
+    # Получаем заказы пользователя, исключая выполненные
+    orders = Order.objects.filter(user=request.user).exclude(status='completed')
+
+    # Передаем данные в шаблон
+    return render(request, 'basket.html', {'basket': basket, 'total_price': total_price, 'orders': orders})
 
 
 @login_required
@@ -74,7 +80,7 @@ def checkout(request):
         # Очищаем корзину
         basket.items.all().delete()
 
-        message = "Заказ в пути"
+        message = "Собираем заказ"
         return render(request, 'basket.html', {'basket': basket, 'total_price': 0, 'message': message})
 
     return redirect('basket')

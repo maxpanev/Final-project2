@@ -19,6 +19,13 @@ class BasketItem(models.Model):
     quantity = models.PositiveIntegerField(default=1)
 
 class Order(models.Model):
+    STATUS_CHOICES = [
+        ('processing', 'В обработке'),
+        ('assembling', 'Собираем'),
+        ('in_transit', 'Заказ в пути'),
+        ('completed', 'Выполнен'),
+    ]
+
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     basket = models.ForeignKey(Basket, on_delete=models.CASCADE)
     city = models.CharField(max_length=255)
@@ -26,5 +33,6 @@ class Order(models.Model):
     date = models.DateField()
     time = models.CharField(max_length=255)
     phone = models.CharField(max_length=11, default='')
-    comment = models.TextField(blank=True, default='')  # Новое поле для комментариев
+    comment = models.TextField(blank=True, default='')
     created_at = models.DateTimeField(auto_now_add=True)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='processing')
