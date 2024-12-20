@@ -14,9 +14,12 @@ class Basket(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
 class BasketItem(models.Model):
-    basket = models.ForeignKey(Basket, related_name='items', on_delete=models.CASCADE)
+    basket = models.ForeignKey(Basket, related_name='items', on_delete=models.CASCADE, null=True, blank=True)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=1)
+
+    def __str__(self):
+        return f"{self.product.name} ({self.quantity})"
 
 class Order(models.Model):
     STATUS_CHOICES = [

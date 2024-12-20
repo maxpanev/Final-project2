@@ -57,7 +57,13 @@ def checkout(request):
 
         basket, created = Basket.objects.get_or_create(user=request.user)
 
-        order = Order(
+        # Проверяем, есть ли товары в корзине
+        if not basket.items.exists():
+            message = "Корзина пуста! Невозможно оформить заказ."
+            return render(request, 'basket.html', {'basket': basket, 'total_price': 0, 'message': message})
+
+        # Создаем новый заказ
+        order = Order.objects.create(
             user=request.user,
             city=city,
             address=address,
@@ -66,15 +72,24 @@ def checkout(request):
             phone=phone,
             comment=comment
         )
-        order.save()
 
+        # Создаем копии `BasketItem` и связываем их с заказом
         for item in basket.items.all():
-            order.items.add(item)
+            basket_item_copy = BasketItem.objects.create(
+                basket=None,  # Отключаем привязку к корзине
+                product=item.product,
+                quantity=item.quantity
+            )
+            order.items.add(basket_item_copy)
 
+        # Отправляем уведомление в Telegram (если реализовано)
         send_order_to_telegram(order)
+
+        # Очищаем корзину
         basket.items.all().delete()
 
-        message = "Собираем заказ"
+        # Уведомление об успешном оформлении
+        message = "Ваш заказ успешно оформлен!"
         return render(request, 'basket.html', {'basket': basket, 'total_price': 0, 'message': message})
 
     return redirect('basket')
