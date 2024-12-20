@@ -26,20 +26,15 @@ def add_to_basket(request, product_id):
         basket_item.quantity += 1
         basket_item.save()
 
-    # Перенаправляем пользователя обратно на предыдущую страницу
     return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
 
 @login_required
 def basket(request):
-    # Получаем корзину пользователя
     basket, created = Basket.objects.get_or_create(user=request.user)
     total_price = sum(item.product.price * item.quantity for item in basket.items.all())
-
-    # Получаем заказы пользователя, исключая выполненные
     orders = Order.objects.filter(user=request.user).exclude(status='completed')
 
-    # Передаем данные в шаблон
     return render(request, 'basket.html', {'basket': basket, 'total_price': total_price, 'orders': orders})
 
 
@@ -58,26 +53,25 @@ def checkout(request):
         date = request.POST.get('date')
         time = request.POST.get('time')
         phone = request.POST.get('phone')
-        comment = request.POST.get('comment')  # Получаем комментарий
+        comment = request.POST.get('comment')
 
         basket, created = Basket.objects.get_or_create(user=request.user)
 
-        # Создаем объект Order
-        order = Order.objects.create(
+        order = Order(
             user=request.user,
-            basket=basket,
             city=city,
             address=address,
             date=date,
             time=time,
             phone=phone,
-            comment=comment  # Сохраняем комментарий в заказе
+            comment=comment
         )
+        order.save()
 
-        # Отправляем заказ в Telegram
+        for item in basket.items.all():
+            order.items.add(item)
+
         send_order_to_telegram(order)
-
-        # Очищаем корзину
         basket.items.all().delete()
 
         message = "Собираем заказ"
@@ -93,7 +87,7 @@ def register(request):
             user = form.save()
             Profile.objects.create(user=user)
             login(request, user)
-            return redirect('home')  # Измените 'layoute' на 'home'
+            return redirect('home')
     else:
         form = RegisterForm()
     return render(request, 'register.html', {'form': form})
