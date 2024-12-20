@@ -45,41 +45,61 @@
         {% csrf_token %}
         <h3>Заполните поля</h3>
         <hr>
-        <div class="form-group">
-            <label for="city">Город</label>
-            <select name="city" id="city" class="form-control" required>
-                <option value="" disabled selected hidden>Выберите город</option>
-                <option value="Москва">Москва</option>
-                <option value="Санкт-Петербург">Санкт-Петербург</option>
-                <option value="Краснодар">Краснодар</option>
-                <option value="Самара">Самара</option>
-            </select>
+
+        <!-- Синяя рамка для Дата и время доставки и Получатель -->
+        <div class="border border-primary rounded p-3 mb-3">
+            <img src="{% static 'img/clock.png' %}" alt="Logo" style="height: 40px; margin-right: 0px; display: inline-block; vertical-align: middle;">
+            <h4 style="display: inline-block; vertical-align: middle;">Дата и время доставки</h4>
+            <hr>
+            <div class="form-group">
+                <label for="date">Выберите дату</label>
+                <input type="date" name="date" id="date" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="time">Выберите время</label>
+                <select name="time" id="time" class="form-control">
+                    <option value="" disabled selected hidden>Выбрать</option>
+                    <option value="С 07:00 до 11:00">С 07:00 до 11:00</option>
+                    <option value="С 11:00 до 15:00">С 11:00 до 15:00</option>
+                    <option value="С 15:00 до 19:00">С 15:00 до 19:00</option>
+                    <option value="С 19:00 до 23:00">С 19:00 до 23:00</option>
+                </select>
+            </div>
         </div>
-        <div class="form-group">
-            <label for="address">Адрес</label>
-            <input type="text" name="address" id="address" class="form-control" placeholder="Адрес" required>
+
+        <!-- Желтая рамка для Получатель -->
+        <div class="border border-warning rounded p-3 mb-3">
+            <img src="{% static 'img/recipient.png' %}" alt="Logo" style="height: 40px; margin-right: 0px; display: inline-block; vertical-align: middle;">
+            <h4 style="display: inline-block; vertical-align: middle;">Получатель</h4>
+            <hr>
+            <div class="form-group">
+                <label for="city">Город</label>
+                <select name="city" id="city" class="form-control" required>
+                    <option value="" disabled selected hidden>Выберите город</option>
+                    <option value="Москва">Москва</option>
+                    <option value="Санкт-Петербург">Санкт-Петербург</option>
+                    <option value="Краснодар">Краснодар</option>
+                    <option value="Самара">Самара</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="address">Адрес доставки</label>
+                <input type="text" name="address" id="address" class="form-control" placeholder="Адрес" required>
+            </div>
+            <div class="form-group">
+                <label for="phone">Телефон получателя</label>
+                <input type="tel" name="phone" id="phone" class="form-control" placeholder="Ваш номер телефона" pattern="[0-9]+" required>
+            </div>
         </div>
-        <div class="form-group">
-            <label for="date">Дата</label>
-            <input type="date" name="date" id="date" class="form-control" required>
-        </div>
-        <div class="form-group">
-            <label for="time">Время</label>
-            <select name="time" id="time" class="form-control">
-                <option value="" disabled selected hidden>Выберите время</option>
-                <option value="С 07:00 до 11:00">С 07:00 до 11:00</option>
-                <option value="С 11:00 до 15:00">С 11:00 до 15:00</option>
-                <option value="С 15:00 до 19:00">С 15:00 до 19:00</option>
-                <option value="С 19:00 до 23:00">С 19:00 до 23:00</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="phone">Телефон для обратной связи</label>
-            <input type="tel" name="phone" id="phone" class="form-control" placeholder="Ваш номер телефона" pattern="[0-9]+" required>
-        </div>
-        <div class="form-group">
-            <label for="comment">Комментарий (не обязательно)</label>
-            <textarea name="comment" id="comment" class="form-control" rows="4" placeholder="Ваш комментарий"></textarea>
+
+        <!-- Зеленая рамка для Комментарий -->
+        <div class="border border-success rounded p-3 mb-3">
+            <img src="{% static 'img/comment.png' %}" alt="Logo" style="height: 40px; margin-right: 0px; display: inline-block; vertical-align: middle;">
+            <h4 style="display: inline-block; vertical-align: middle;">Комментарий (не обязательно)</h4>
+            <hr>
+            <div class="form-group">
+                <br><textarea name="comment" id="comment" class="form-control" rows="4" placeholder="Ваш комментарий"></textarea>
+            </div>
         </div>
         <h4>Общая стоимость: {{ total_price }} руб.</h4>
         <button type="submit" class="btn btn-success">Оплатить</button>
