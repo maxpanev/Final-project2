@@ -1,0 +1,58 @@
+{% extends 'layoute.html' %}
+
+{% load static %}
+
+{% block title %}
+<title>История заказов</title>
+<style>
+    .status-processing {
+        background-color: red;
+        color: white; /* Чтобы текст был виден на красном фоне */
+        padding: 2px 4px; /* Немного отступов вокруг текста */
+        border-radius: 3px; /* Слегка закругленные углы */
+    }
+    .status-assembling {
+        background-color: blue;
+        color: white;
+        padding: 2px 4px;
+        border-radius: 3px;
+    }
+    .status-in-transit {
+        background-color: green;
+        color: white;
+        padding: 2px 4px;
+        border-radius: 3px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="additional-info">
+    <h2>История заказов</h2>
+    {% for order in orders %}
+        {% if order.status != 'completed' %}
+            <hr>
+            <div class="order">
+                <h3>Заказ №{{ order.id }}</h3>
+                <p>Статус:
+                    <span class="{% if order.status == 'processing' %}status-processing{% elif order.status == 'assembling' %}status-assembling{% elif order.status == 'in_transit' %}status-in-transit{% endif %}">
+                        {{ order.get_status_display }}
+                    </span>
+                </p>
+                <p>Время доставки: {{ order.date }} {{ order.time }}</p>
+                <h5>Товары в заказе:</h5>
+                <ul>
+                    {% for item in order.items.all %}
+                    <li>
+                        <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" style="width: 100px; height: auto;">
+                        {{ item.product.name }} — {{ item.quantity }} шт.
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+    {% empty %}
+        <p>Нет активных заказов.</p>
+    {% endfor %}
+</div>
+{% endblock %}
