@@ -46,8 +46,18 @@
             <div class="order">
                 <h3>Заказ №{{ order.id }}</h3>
                 <p>Статус: {{ order.get_status_display }}</p>
-                <p>Дата: {{ order.created_at }}</p>
-                <!-- Здесь вы можете добавить отображение товаров из заказа и другую информацию -->
+                <p>Дата создания: {{ order.created_at }}</p>
+                <p>Дата доставки: {{ order.date }}</p>
+                <p>Время доставки: {{ order.time }}</p>
+                <h4>Товары в заказе:</h4>
+                <ul>
+                    {% for item in order.items.all %}
+                    <li>
+                        <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" style="width: 100px; height: auto;">
+                        {{ item.product.name }} — {{ item.quantity }} шт.
+                    </li>
+                    {% endfor %}
+                </ul>
             </div>
         {% endif %}
     {% empty %}
