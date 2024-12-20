@@ -40,28 +40,6 @@
             {% endfor %}
         </tbody>
     </table>
-<div class="additional-info">
-    {% for order in orders %}
-        {% if order.status != 'completed' %}
-            <div class="order">
-                <h3>Заказ №{{ order.id }}</h3>
-                <p>Статус: {{ order.get_status_display }}</p>
-                <p>Время доставки: {{ order.date }} {{ order.time }}</p>
-                <h5>Товары в заказе:</h5>
-                <ul>
-                    {% for item in order.items.all %}
-                    <li>
-                        <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" style="width: 100px; height: auto;">
-                        {{ item.product.name }} — {{ item.quantity }} шт.
-                    </li>
-                    {% endfor %}
-                </ul>
-            </div>
-        {% endif %}
-    {% empty %}
-        <p>Нет активных заказов.</p>
-    {% endfor %}
-</div>
     {% if basket.items.count > 0 %}
     <form method="post" action="{% url 'checkout' %}">
         {% csrf_token %}
@@ -108,7 +86,32 @@
     </form>
 
     {% endif %}
-
+<div class="additional-info">
+    <hr>
+    <br>
+    <h2>История заказов</h2>
+    {% for order in orders %}
+        {% if order.status != 'completed' %}
+            <hr>
+            <div class="order">
+                <h3>Заказ №{{ order.id }}</h3>
+                <p>Статус: {{ order.get_status_display }}</p>
+                <p>Время доставки: {{ order.date }} {{ order.time }}</p>
+                <h5>Товары в заказе:</h5>
+                <ul>
+                    {% for item in order.items.all %}
+                    <li>
+                        <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" style="width: 100px; height: auto;">
+                        {{ item.product.name }} — {{ item.quantity }} шт.
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+    {% empty %}
+        <p>Нет активных заказов.</p>
+    {% endfor %}
+</div>
     {% if message %}
     <div class="alert alert-success" role="alert">
         {{ message }}

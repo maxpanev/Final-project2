@@ -89,7 +89,7 @@ def checkout(request):
         basket.items.all().delete()
 
         # Уведомление об успешном оформлении
-        message = "Ваш заказ успешно оформлен!"
+        message = "Ваш заказ успешно оформлен! Обновите страницу чтобы увидеть!"
         return render(request, 'basket.html', {'basket': basket, 'total_price': 0, 'message': message})
 
     return redirect('basket')
