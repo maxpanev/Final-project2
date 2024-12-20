@@ -46,10 +46,8 @@
             <div class="order">
                 <h3>Заказ №{{ order.id }}</h3>
                 <p>Статус: {{ order.get_status_display }}</p>
-                <p>Дата создания: {{ order.created_at }}</p>
-                <p>Дата доставки: {{ order.date }}</p>
-                <p>Время доставки: {{ order.time }}</p>
-                <h4>Товары в заказе:</h4>
+                <p>Время доставки: {{ order.date }} {{ order.time }}</p>
+                <h5>Товары в заказе:</h5>
                 <ul>
                     {% for item in order.items.all %}
                     <li>
